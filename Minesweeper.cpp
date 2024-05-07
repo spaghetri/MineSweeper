@@ -1,3 +1,5 @@
+#include <iostream>
+using namespace std;
 class Tile{//Tile class
     public: 
     bool isMine;
@@ -30,5 +32,11 @@ class GameBoard: public Tile
 };
 class Player
 {
+    int main()
+    {
+        cout << "player class";
+
+        return 0;
+    }
 
 };

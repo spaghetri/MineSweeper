@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+
 class Tile{//Tile class
     public: 
     bool isMine;
@@ -25,6 +26,11 @@ class GameBoard: public Tile
     Tile eboard[8][10];
     Tile mboard[14][18];
     Tile hboard[20][25];
+
+    public:
+    GameBoard(){
+
+    }
     
 
 
@@ -32,6 +38,7 @@ class GameBoard: public Tile
 };
 class Player
 {
+
     int main()
     {
         cout << "player class";
@@ -40,3 +47,9 @@ class Player
     }
 
 };
+int main()
+{
+    cout << "player class";
+
+    return 0;
+}

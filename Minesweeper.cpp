@@ -39,12 +39,7 @@ class GameBoard: public Tile
 class Player
 {
 
-    int main()
-    {
-        cout << "player class";
-
-        return 0;
-    }
+    
 
 };
 int main()

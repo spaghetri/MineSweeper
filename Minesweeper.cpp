@@ -36,6 +36,7 @@ class GameBoard: public Tile
             {
                 for(int c=0;c<10;c++)
                 {
+                    eboard[r][c]= Tile();
                 }
             }
         }
@@ -46,6 +47,7 @@ class GameBoard: public Tile
             {
                 for(int c=0;c<25;c++)
                 {
+                    hboard[r][c]=Tile();
                 }
             }
         }
@@ -56,6 +58,7 @@ class GameBoard: public Tile
             {
                 for(int c=0;c<18;c++)
                 {
+                    mboard[r][c]=Tile();
                 }
             }
         }

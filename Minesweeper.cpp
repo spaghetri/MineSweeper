@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstdlib> 
 using namespace std;
 
 class Tile{//Tile class
@@ -24,17 +25,23 @@ class Tile{//Tile class
 class GameBoard: public Tile
 {
     private:
-    
+    int rlen, clen;//row and column length
 
     public:
+    int difficultyFlags;
     GameBoard(string difficulty)
     {
+        
         if(difficulty.compare("easy")==0)//easy
         {
+            difficultyFlags=10;
+            rlen=8;
+            clen=10;
             Tile eboard[8][10];
-            for(int r=0;r<8;r++)
+
+            for(int r=0;r<rlen;r++)
             {
-                for(int c=0;c<10;c++)
+                for(int c=0;c<clen;c++)
                 {
                     eboard[r][c]= Tile();
                 }
@@ -42,10 +49,13 @@ class GameBoard: public Tile
         }
         else if(difficulty.compare("hard")==0)//hard
         {
-            Tile hboard[20][25];
-            for(int r=0;r<20;r++)
+            difficultyFlags=99;
+            rlen=20;
+            clen=24;
+            Tile hboard[rlen][clen];
+            for(int r=0;r<rlen;r++)
             {
-                for(int c=0;c<25;c++)
+                for(int c=0;c<clen;c++)
                 {
                     hboard[r][c]=Tile();
                 }
@@ -53,15 +63,32 @@ class GameBoard: public Tile
         }
         else//medium, default difficulty
         {
-            Tile mboard[14][18];
-            for(int r=0;r<14;r++)
+            
+            difficultyFlags=40;
+            rlen=14;
+            clen=18;
+            Tile mboard[rlen][clen];
+            for(int r=0;r<rlen;r++)
             {
-                for(int c=0;c<18;c++)
+                for(int c=0;c<clen;c++)
                 {
                     mboard[r][c]=Tile();
                 }
             }
+            cout<<endl;
         }
+        int tempFlag=difficultyFlags;
+        while(tempFlag>0)//populate matrix with mines
+        {
+            cout<<rand()%rlen<<" ";
+            cout<<rand()%clen<<endl;
+            //put in case switch for difficulty again
+            
+            --tempFlag;        
+        }
+        cout<<""<<endl;
+
+        
 
     }
     

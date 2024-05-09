@@ -33,13 +33,16 @@ class GameBoard: public Tile
     {
         
         int  diff;
+        Tile eboard[8][10];
+        Tile mboard[14][18];
+        Tile hboard[20][24];
         if(difficulty.compare("easy")==0)//easy
         {
             diff=1;
             difficultyFlags=10;
             rlen=8;
             clen=10;
-            Tile eboard[8][10];
+            
 
             for(int r=0;r<rlen;r++)
             {
@@ -55,7 +58,7 @@ class GameBoard: public Tile
             difficultyFlags=99;
             rlen=20;
             clen=24;
-            Tile hboard[rlen][clen];
+            
             for(int r=0;r<rlen;r++)
             {
                 for(int c=0;c<clen;c++)
@@ -71,7 +74,7 @@ class GameBoard: public Tile
             difficultyFlags=40;
             rlen=14;
             clen=18;
-            Tile mboard[rlen][clen];
+           
             for(int r=0;r<rlen;r++)
             {
                 for(int c=0;c<clen;c++)
@@ -84,23 +87,54 @@ class GameBoard: public Tile
         int tempFlag=difficultyFlags;
         while(tempFlag>0)//populate matrix with mines
         {
-            cout<<rand()%rlen<<" ";
-            cout<<rand()%clen<<endl;
+            int minex=rand()%rlen;
+            int miney=rand()%clen;
+            
             //put in case switch for difficulty again
             switch(diff)
+            {
+                case 1:
+                if(eboard[minex][miney].isMine==false)
+                {
+                    eboard[minex][miney].isMine=true;
+                     --tempFlag;
+                }
+                break;
+                case 2:
+                if(mboard[minex][miney].isMine==false)
+                {
+                    mboard[minex][miney].isMine=true;
+                     --tempFlag;
+                }
+                break;
+                case 3:
+                if(hboard[minex][miney].isMine==false)
+                {
+                    hboard[minex][miney].isMine=true;
+                     --tempFlag;
+                }
+                break;
+
+            }
+            
+                   
+        }
+        
+        switch(diff)
             {
                 case 1:
                 
                 break;
                 case 2:
+
                 break;
-                case 3:
+                case 3: 
+
                 break;
 
             }
-            
-            --tempFlag;        
-        }
+
+        
         cout<<""<<endl;
 
         
@@ -123,7 +157,7 @@ class Player
 int main()
 {
     cout << "player class";
-    GameBoard("j");
+    GameBoard("easy");
 
 
     return 0;

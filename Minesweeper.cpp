@@ -141,6 +141,47 @@ class GameBoard: public Tile
             }
             cout<<endl;
         }
+        for(int r=0;r<rlen;r++)
+        {
+            for(int c=0;c<clen;c++)
+            {
+                int count=0;
+                if((r-1)>=0&&(r-1)<rlen&&(c-1)>=0&&(c-1)<clen&&eboard[r-1][c-1].isMine)
+                {
+                    count++;
+                }
+                if((r-1)>=0&&(r-1)<rlen&&c>=0&&c<clen&&eboard[r-1][c].isMine)
+                {
+                    count++;
+                }
+                if((r-1)>=0&&(r-1)<rlen&&(c+1)>=0&&(c+1)<clen&&eboard[r-1][c+1].isMine)
+                {
+                    count++;
+                }
+                if(r>=0&&r<rlen&&(c-1)>=0&&(c-1)<clen&&eboard[r][c-1].isMine)
+                {
+                    count++;
+                }
+                if(r>=0&&r<rlen&&(c+1)>=0&&(c+1)<clen&&eboard[r][c+1].isMine)
+                {
+                    count++;
+                }
+                if((r+1)>=0&&(r+1)<rlen&&(c-1)>=0&&(c-1)<clen&&eboard[r+1][c-1].isMine)
+                {
+                    count++;
+                }
+                if((r+1)>=0&&(r+1)<rlen&&c>=0&&c<clen&&eboard[r+1][c].isMine)
+                {
+                    count++;
+                }
+                if((r+1)>=0&&(r+1)<rlen&&(c+1)>=0&&(c+1)<clen&&eboard[r+1][c+1].isMine)
+                {
+                    count++;
+                }
+                eboard[r][c].setSMines(count);
+                
+            }
+        }
         
 
         

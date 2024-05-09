@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib> 
+#include <random>
 using namespace std;
 
 class Tile{//Tile class
@@ -32,6 +33,7 @@ class GameBoard: public Tile
     GameBoard(string difficulty)
     {
         
+        random_device rd;
         int  diff;
         Tile eboard[8][10];
         Tile mboard[14][18];
@@ -87,8 +89,8 @@ class GameBoard: public Tile
         int tempFlag=difficultyFlags;
         while(tempFlag>0)//populate matrix with mines
         {
-            int minex=rand()%rlen;
-            int miney=rand()%clen;
+            int minex=rd()%rlen;
+            int miney=rd()%clen;
             
             //put in case switch for difficulty again
             switch(diff)
@@ -96,21 +98,21 @@ class GameBoard: public Tile
                 case 1:
                 if(eboard[minex][miney].isMine==false)
                 {
-                    eboard[minex][miney].isMine=true;
+                    eboard[minex][miney].setMine();
                      --tempFlag;
                 }
                 break;
                 case 2:
                 if(mboard[minex][miney].isMine==false)
                 {
-                    mboard[minex][miney].isMine=true;
+                    mboard[minex][miney].setMine();
                      --tempFlag;
                 }
                 break;
                 case 3:
                 if(hboard[minex][miney].isMine==false)
                 {
-                    hboard[minex][miney].isMine=true;
+                    hboard[minex][miney].setMine();
                      --tempFlag;
                 }
                 break;
@@ -119,20 +121,27 @@ class GameBoard: public Tile
             
                    
         }
-        
-        switch(diff)
+        for(int r=0;r<rlen;r++)
+        {
+            for(int c=0;c<clen;c++)
+            {
+                switch(diff)
             {
                 case 1:
-                
+                cout<<eboard[r][c].isMine<<" ";
                 break;
                 case 2:
-
+                cout<<mboard[r][c].isMine<<" ";
                 break;
                 case 3: 
-
+                cout<<hboard[r][c].isMine<<" ";
                 break;
 
             }
+            }
+            cout<<endl;
+        }
+        
 
         
         cout<<""<<endl;
@@ -156,7 +165,7 @@ class Player
 };
 int main()
 {
-    cout << "player class";
+    cout << "player class"<<endl;
     GameBoard("easy");
 
 

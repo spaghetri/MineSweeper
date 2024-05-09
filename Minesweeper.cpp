@@ -32,8 +32,10 @@ class GameBoard: public Tile
     GameBoard(string difficulty)
     {
         
+        int  diff;
         if(difficulty.compare("easy")==0)//easy
         {
+            diff=1;
             difficultyFlags=10;
             rlen=8;
             clen=10;
@@ -49,6 +51,7 @@ class GameBoard: public Tile
         }
         else if(difficulty.compare("hard")==0)//hard
         {
+            diff=3;
             difficultyFlags=99;
             rlen=20;
             clen=24;
@@ -64,6 +67,7 @@ class GameBoard: public Tile
         else//medium, default difficulty
         {
             
+            diff=2;
             difficultyFlags=40;
             rlen=14;
             clen=18;
@@ -83,6 +87,17 @@ class GameBoard: public Tile
             cout<<rand()%rlen<<" ";
             cout<<rand()%clen<<endl;
             //put in case switch for difficulty again
+            switch(diff)
+            {
+                case 1:
+                
+                break;
+                case 2:
+                break;
+                case 3:
+                break;
+
+            }
             
             --tempFlag;        
         }

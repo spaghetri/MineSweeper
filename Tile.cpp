@@ -7,7 +7,7 @@ class Tile{
     Tile(){
         isMine = false;
         broken = false;
-        sMines;
+        sMines = 0;
     }
 
     void setMine(){

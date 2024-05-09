@@ -7,10 +7,12 @@ using namespace std;
 class Tile{//Tile class
     public: 
     bool isMine;
+    bool broken;
     int sMines;
 
     Tile(){
         isMine = false;
+        broken = false;
         sMines = 0;
     }
 
@@ -27,6 +29,7 @@ class GameBoard: public Tile
 {
     private:
     int rlen, clen;//row and column length
+    bool alive;
 
     public:
     int difficultyFlags;
@@ -189,6 +192,23 @@ class GameBoard: public Tile
 
         
 
+    }
+
+
+        void breakTile(Tile t){ 
+        if(t.broken == false && t.isMine == false){
+            t.broken = true;
+            if(t.sMines == 0){
+                
+            }
+        }
+        else if(t.broken == false && t.isMine == true)
+        {
+            alive = false;
+        }
+        else{
+            cout<<"Tile is already broken";
+        }
     }
     
 

@@ -9,9 +9,11 @@ class Tile{//Tile class
     bool isMine;
     bool broken;
     int sMines;
+    bool isFlagged;
 
     Tile(){
         isMine = false;
+        isFlagged=false;
         broken = false;
         sMines = 0;
     }
@@ -89,8 +91,8 @@ class GameBoard: public Tile
             }
             cout<<endl;
         }
-        int tempFlag=difficultyFlags;
-        while(tempFlag>0)//populate matrix with mines
+        int tempMine=difficultyFlags;
+        while(tempMine>0)//populate matrix with mines
         {
             int minex=rd()%rlen;
             int miney=rd()%clen;
@@ -102,21 +104,21 @@ class GameBoard: public Tile
                 if(eboard[minex][miney].isMine==false)
                 {
                     eboard[minex][miney].setMine();
-                     --tempFlag;
+                     --tempMine;
                 }
                 break;
                 case 2:
                 if(mboard[minex][miney].isMine==false)
                 {
                     mboard[minex][miney].setMine();
-                     --tempFlag;
+                     --tempMine;
                 }
                 break;
                 case 3:
                 if(hboard[minex][miney].isMine==false)
                 {
                     hboard[minex][miney].setMine();
-                     --tempFlag;
+                     --tempMine;
                 }
                 break;
 
@@ -124,26 +126,7 @@ class GameBoard: public Tile
             
                    
         }
-        for(int r=0;r<rlen;r++)
-        {
-            for(int c=0;c<clen;c++)
-            {
-                switch(diff)
-            {
-                case 1:
-                cout<<eboard[r][c].isMine<<" ";
-                break;
-                case 2:
-                cout<<mboard[r][c].isMine<<" ";
-                break;
-                case 3: 
-                cout<<hboard[r][c].isMine<<" ";
-                break;
-
-            }
-            }
-            cout<<endl;
-        }
+        
         for(int r=0;r<rlen;r++)
         {
             for(int c=0;c<clen;c++)
@@ -195,21 +178,88 @@ class GameBoard: public Tile
     }
 
 
-        void breakTile(Tile t){ 
-        if(t.broken == false && t.isMine == false){
-            t.broken = true;
-            if(t.sMines == 0){
-                
+        void breakTile(Tile t)
+        { 
+            if(t.broken == false && t.isMine == false){
+                t.broken = true;
+                if(t.sMines == 0){
+                    
+                }
+            }
+            else if(t.broken == false && t.isMine == true)
+            {
+                alive = false;
+            }
+            else{
+                cout<<"Tile is already broken";
             }
         }
-        else if(t.broken == false && t.isMine == true)
+        void markTile(Tile t)
         {
-            alive = false;
+            if(t.isFlagged==false)
+            {
+                t.isFlagged=true;
+                difficultyFlags--;
+            }
+            else
+            {
+                cout<<"already flagged silly";
+            }
+            
         }
-        else{
-            cout<<"Tile is already broken";
+        void unMarkTile(Tile t)
+        {
+            
+            if(t.isFlagged==true)
+            {
+                t.isFlagged=false;
+                difficultyFlags++;
+            }
+            else
+            {
+                cout<<"can't unflag a tile without a flag silly";
+            }
+
         }
-    }
+        void displayBoard()
+        {
+            int diff=diff;
+            switch(diff)
+            {
+                case 1:
+                for(int r=0;r<8;r++)
+                {
+                    for(int c=0;c<10;c++)
+                    {
+
+                    }
+                    cout<<endl;
+                }
+
+                break;
+                case 2:
+                for(int r=0;r<14;r++)
+                {
+                    for(int c=0;c<18;c++)
+                    {
+
+                    }
+                    cout<<endl;
+                }
+                break;
+                case 3:
+                for(int r=0;r<20;r++)
+                {
+                    for(int c=0;c<24;c++)
+                    {
+
+                    }
+                    cout<<endl;
+                }
+                break;
+            }
+
+        }
     
 
 
@@ -226,9 +276,17 @@ class Player
 };
 int main()
 {
-    cout << "player class"<<endl;
-    GameBoard("easy");
+    cout << "TIME TO HAVE FUN"<<endl;
+    GameBoard board("easy");
+    do
+    {
 
+
+
+
+
+
+    }while(5>4);
 
     return 0;
 }

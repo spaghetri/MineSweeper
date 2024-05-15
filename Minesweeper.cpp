@@ -30,19 +30,22 @@ class Tile{//Tile class
 class GameBoard: public Tile
 {
     private:
-    int rlen, clen;//row and column length
-    bool alive;
-
+    
+    
+    Tile eboard[8][10];
+    Tile mboard[14][18];
+    Tile hboard[20][24];
     public:
+    int rlen, clen;//row and column length
     int difficultyFlags;
+    bool alive;
     GameBoard(string difficulty)
     {
         
         random_device rd;
         int  diff;
-        Tile eboard[8][10];
-        Tile mboard[14][18];
-        Tile hboard[20][24];
+        alive=true;
+        
         if(difficulty.compare("easy")==0)//easy
         {
             diff=1;
@@ -89,7 +92,6 @@ class GameBoard: public Tile
                     mboard[r][c]=Tile();
                 }
             }
-            cout<<endl;
         }
         int tempMine=difficultyFlags;
         while(tempMine>0)//populate matrix with mines
@@ -178,52 +180,207 @@ class GameBoard: public Tile
     }
 
 
-        void breakTile(Tile t)
+        void breakTile(int x, int y, int diff)
         { 
-            if(t.broken == false && t.isMine == false){
-                t.broken = true;
-                if(t.sMines == 0){
+            
+            if(diff==1)
+                {
+                    if(eboard[x][y].broken == false && eboard[x][y].isMine == false){
+                    eboard[x][y].broken = true;
+                    if(eboard[x][y].sMines == 0){
+                        
+                    }
+                }
+                else if(eboard[x][y].broken == false && eboard[x][y].isMine == true)
+                {
+                    alive = false;
+                }
+                else{
+                    cout<<"Tile is already broken"<<endl;
+                }
+            }
+            else if(diff==3)
+            {
+                 if(hboard[x][y].broken == false && hboard[x][y].isMine == false){
+                hboard[x][y].broken = true;
+                if(hboard[x][y].sMines == 0){
                     
                 }
             }
-            else if(t.broken == false && t.isMine == true)
+            else if(hboard[x][y].broken == false && hboard[x][y].isMine == true)
             {
                 alive = false;
             }
             else{
-                cout<<"Tile is already broken";
+                cout<<"Tile is already broken"<<endl;
             }
-        }
-        void markTile(Tile t)
-        {
-            if(t.isFlagged==false)
-            {
-                t.isFlagged=true;
-                difficultyFlags--;
             }
             else
             {
-                cout<<"already flagged silly";
+                 if(mboard[x][y].broken == false && mboard[x][y].isMine == false){
+                mboard[x][y].broken = true;
+                if(mboard[x][y].sMines == 0){
+                    
+                }
             }
+            else if(mboard[x][y].broken == false && mboard[x][y].isMine == true)
+            {
+                alive = false;
+            }
+            else{
+                cout<<"Tile is already broken"<<endl;
+            }
+            }
+
             
         }
-        void unMarkTile(Tile t)
+        void markTile(int x, int y, int diff)
+        {
+            if(diff==1)
+            {
+                    if(eboard[x][y].isFlagged==false)
+                {
+                    eboard[x][y].isFlagged=true;
+                    difficultyFlags--;
+                }
+                else
+                {
+                    cout<<"already flagged silly"<<endl;
+                }
+
+                if(difficultyFlags==0)
+                {
+                    int count;
+                    count=0;
+                    for(int r=0;r<rlen;r++)
+                    {
+                        for(int c=0;c<clen;c++)
+                        {
+                            if(eboard[r][c].isFlagged&&eboard[r][c].isMine)
+                            {
+                                count++;
+                            }
+                        }
+                    }
+                    if(count==10)
+                    {
+                        cout<<"YOU WIN";
+                        
+                    }
+                }
+            }
+            else if(diff==3)
+            {
+                    if(hboard[x][y].isFlagged==false)
+                {
+                    hboard[x][y].isFlagged=true;
+                    difficultyFlags--;
+                }
+                else
+                {
+                    cout<<"already flagged silly"<<endl;
+                }
+                if(difficultyFlags==0)
+                {
+                    int count;
+                    count=0;
+                    for(int r=0;r<rlen;r++)
+                    {
+                        for(int c=0;c<clen;c++)
+                        {
+                            if(hboard[r][c].isFlagged&&hboard[r][c].isMine)
+                            {
+                                count++;
+                            }
+                        }
+                    }
+                    if(count==99)
+                    {
+                        cout<<"YOU WIN";
+                        
+                    }
+                }
+            }
+            else
+            {
+                    if(mboard[x][y].isFlagged==false)
+                {
+                    mboard[x][y].isFlagged=true;
+                    difficultyFlags--;
+                }
+                else
+                {
+                    cout<<"already flagged silly"<<endl;
+                }
+            }
+            if(difficultyFlags==0)
+                {
+                    int count;
+                    count=0;
+                    for(int r=0;r<rlen;r++)
+                    {
+                        for(int c=0;c<clen;c++)
+                        {
+                            if(mboard[r][c].isFlagged&&mboard[r][c].isMine)
+                            {
+                                count++;
+                            }
+                        }
+                    }
+                    if(count==40)
+                    {
+                        cout<<"YOU WIN";
+                        
+                    }
+                }
+            
+            
+        }
+        void unMarkTile(int x, int y,int diff)
         {
             
-            if(t.isFlagged==true)
+            if(diff==1)
             {
-                t.isFlagged=false;
+                 if(eboard[x][y].isFlagged==true)
+            {
+                eboard[x][y].isFlagged=false;
                 difficultyFlags++;
             }
             else
             {
-                cout<<"can't unflag a tile without a flag silly";
+                cout<<"can't unflag a tile without a flag silly"<<endl;
             }
+            }
+            else if(diff==3)
+            {
+                 if(hboard[x][y].isFlagged==true)
+            {
+                hboard[x][y].isFlagged=false;
+                difficultyFlags++;
+            }
+            else
+            {
+                cout<<"can't unflag a tile without a flag silly"<<endl;
+            }
+            }
+            else
+            {
+                 if(mboard[x][y].isFlagged==true)
+            {
+                mboard[x][y].isFlagged=false;
+                difficultyFlags++;
+            }
+            else
+            {
+                cout<<"can't unflag a tile without a flag silly"<<endl;
+            }
+            }
+            
 
         }
-        void displayBoard()
+        void displayBoard(int d)
         {
-            int diff=diff;
+            int diff=d;
             switch(diff)
             {
                 case 1:
@@ -231,7 +388,18 @@ class GameBoard: public Tile
                 {
                     for(int c=0;c<10;c++)
                     {
-
+                        if(eboard[r][c].isFlagged)
+                        {
+                            cout<<"* ";
+                        }
+                        else if(eboard[r][c].broken==false)
+                        {
+                            cout<<"- ";
+                        }
+                        else
+                        {
+                            cout<<eboard[r][c].sMines<<" ";
+                        }
                     }
                     cout<<endl;
                 }
@@ -242,7 +410,18 @@ class GameBoard: public Tile
                 {
                     for(int c=0;c<18;c++)
                     {
-
+                        if(mboard[r][c].isFlagged==true)
+                        {
+                            cout<<"* ";
+                        }
+                        else if(mboard[r][c].broken==false)
+                        {
+                            cout<<"- ";
+                        }
+                        else
+                        {
+                            cout<<mboard[r][c].sMines<<" ";
+                        }
                     }
                     cout<<endl;
                 }
@@ -252,7 +431,18 @@ class GameBoard: public Tile
                 {
                     for(int c=0;c<24;c++)
                     {
-
+                        if(hboard[r][c].isFlagged==true)
+                        {
+                            cout<<"* ";
+                        }
+                        else if(hboard[r][c].broken==false)
+                        {
+                            cout<<"- ";
+                        }
+                        else
+                        {
+                            cout<<hboard[r][c].sMines<<" ";
+                        }
                     }
                     cout<<endl;
                 }
@@ -268,25 +458,107 @@ class GameBoard: public Tile
 
 
 };
-class Player
-{
-
-    
-
-};
 int main()
 {
     cout << "TIME TO HAVE FUN"<<endl;
-    GameBoard board("easy");
+    // GameBoard board("easy");
+    // board.displayBoard(1);
+
+
+    cout<<"What difficulty do you want? type in \"easy\", \"medium\", or \"hard\""<<endl;
+    string difficulty;
+    cin>>difficulty;
+    int diff;
+    if(difficulty.compare("easy")==0)
+    {
+        diff=1;
+    }
+    else if(difficulty.compare("hard")==0)
+    {
+        diff=3;
+    }
+    else
+    {
+        diff=2;
+    }
+    GameBoard playerboard(difficulty);
     do
     {
+        
+        playerboard.displayBoard(diff);
+        cout<<"would you like to break or flag or unflag a tile? type \"b\" for break and \"f\" for flag or\"u\" for unflag"<<endl;
+        string decision;
+        cin>>decision;
+        if(decision.compare("b")==0)
+        {
+            cout<<"what x coordinate do you want? Type in numerical value:"<<endl;
+            int x;
+            cin>>x;
+            cout<<"what y coordinate do you want? Type in numerical value:"<<endl;
+            int y;
+            cin>>y;
+
+            if(x>=playerboard.rlen||x<0||y>=playerboard.clen||y<0)
+            {
+                cout<<"buddy those coordinates arent valid."<<endl;
+            }
+            else
+            {
+                playerboard.breakTile(x,y,diff);
+            }
+            
+        }
+        else if(decision.compare("f")==0)
+        {
+            cout<<"what x coordinate do you want? Type in numerical value:"<<endl;
+            int x;
+            cin>>x;
+            cout<<"what y coordinate do you want? Type in numerical value:"<<endl;
+            int y;
+            cin>>y;
+            if(x>=playerboard.rlen||x<0||y>=playerboard.clen||y<0)
+            {
+                cout<<"buddy those coordinates arent valid."<<endl;
+            }
+            else
+            {
+                playerboard.markTile(x,y,diff);
+            }
+        }
+        else if(decision.compare("u")==0)
+        {
+            cout<<"what x coordinate do you want? Type in numerical value:"<<endl;
+            int x;
+            cin>>x;
+            cout<<"what y coordinate do you want? Type in numerical value:"<<endl;
+            int y;
+            cin>>y;
+            if(x>=playerboard.rlen||x<0||y>=playerboard.clen||y<0)
+            {
+                cout<<"buddy those coordinates arent valid."<<endl;
+            }
+            else
+            {
+                playerboard.unMarkTile(x,y,diff);
+            }
+        }
+        else
+        {
+            cout<<"That was not an option buddy."<<endl;
+        }
+
+        
+        
 
 
 
 
 
-
-    }while(5>4);
+    }while(playerboard.alive==true);
+    if(playerboard.alive!=true)
+    {
+        cout<<"you died.";
+    }
 
     return 0;
 }
